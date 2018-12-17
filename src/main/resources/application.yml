@@ -1,0 +1,23 @@
+server:
+      port: 8090
+      servlet:
+            context-path: /api
+spring:
+    profiles: default
+    servlet:
+         multipart:
+               max-file-size: 3000KB
+               max-request-size: 3000KB
+    data:
+         mongodb:
+           uri: mongodb://localhost/eiasiscon
+           # uri: mongodb://localhost/eiasiscontest
+           # uri: mongodb://35.229.86.18/eiasiscon
+           
+api:
+   security:
+         jwt:
+            tokenExpirationTime: 240 # Number of minutes
+            refreshTokenExpTime: 540 # Minutes
+            tokenIssuer: eiasiscon.com.br
+            tokenSigningKey: xm8EV6Hy5RMFK4EEACIDAwQua
