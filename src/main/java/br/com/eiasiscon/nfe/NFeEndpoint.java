@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.eiasiscon.notafiscal.NotaFiscal;
-import br.inf.portalfiscal.nfe.schema_4.retConsStatServ.TRetConsStatServ;
+import br.com.swconsultoria.nfe.schema_4.retConsStatServ.TRetConsStatServ;
 
 @CrossOrigin
 @RestController

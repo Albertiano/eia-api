@@ -1,6 +1,7 @@
 package br.com.eiasiscon.nfe;
 
 import java.lang.invoke.MethodHandles;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import javax.xml.bind.JAXBException;
@@ -12,33 +13,31 @@ import br.com.eiasiscon.configuracao.Configuracao;
 import br.com.eiasiscon.configuracao.ConfiguracaoService;
 import br.com.eiasiscon.empresa.Empresa;
 import br.com.eiasiscon.empresa.EmpresaRepository;
-import br.com.eiasiscon.nfe.javanfe.Assinar;
-import br.com.eiasiscon.nfe.javanfe.Eventos;
 import br.com.eiasiscon.notafiscal.NotaFiscal;
 import br.com.eiasiscon.notafiscal.NotaFiscalRepository;
 import br.com.eiasiscon.uploadfiles.StorageService;
-import br.com.samuelweb.certificado.Certificado;
-import br.com.samuelweb.certificado.CertificadoService;
-import br.com.samuelweb.certificado.exception.CertificadoException;
-import br.com.samuelweb.nfe.NfeWeb;
-import br.com.samuelweb.nfe.dom.ConfiguracoesWebNfe;
-import br.com.samuelweb.nfe.dom.Enum.StatusEnum;
-import br.com.samuelweb.nfe.exception.NfeException;
-import br.com.samuelweb.nfe.util.CertificadoUtil;
-import br.com.samuelweb.nfe.util.ConstantesUtil;
-import br.com.samuelweb.nfe.util.Estados;
-import br.com.samuelweb.nfe.util.XmlUtil;
-import br.inf.portalfiscal.nfe.schema.envEventoCancNFe.TEnvEvento;
-import br.inf.portalfiscal.nfe.schema.envEventoCancNFe.TEvento;
-import br.inf.portalfiscal.nfe.schema.envEventoCancNFe.TProcEvento;
-import br.inf.portalfiscal.nfe.schema.envEventoCancNFe.TRetEnvEvento;
-import br.inf.portalfiscal.nfe.schema_4.enviNFe.TEnviNFe;
-import br.inf.portalfiscal.nfe.schema_4.enviNFe.TNFe;
-import br.inf.portalfiscal.nfe.schema_4.enviNFe.TRetEnviNFe;
-import br.inf.portalfiscal.nfe.schema_4.procNFe.TNfeProc;
-import br.inf.portalfiscal.nfe.schema_4.retConsReciNFe.TRetConsReciNFe;
-import br.inf.portalfiscal.nfe.schema_4.retConsSitNFe.TRetConsSitNFe;
-import br.inf.portalfiscal.nfe.schema_4.retConsStatServ.TRetConsStatServ;
+import br.com.swconsultoria.certificado.Certificado;
+import br.com.swconsultoria.certificado.CertificadoService;
+import br.com.swconsultoria.nfe.Nfe;
+import br.com.swconsultoria.nfe.dom.ConfiguracoesNfe;
+import br.com.swconsultoria.nfe.dom.Evento;
+import br.com.swconsultoria.nfe.dom.enuns.AmbienteEnum;
+import br.com.swconsultoria.nfe.dom.enuns.DocumentoEnum;
+import br.com.swconsultoria.nfe.dom.enuns.EstadosEnum;
+import br.com.swconsultoria.nfe.dom.enuns.StatusEnum;
+import br.com.swconsultoria.nfe.exception.NfeException;
+import br.com.swconsultoria.nfe.schema.envEventoCancNFe.TEnvEvento;
+import br.com.swconsultoria.nfe.schema.envEventoCancNFe.TRetEnvEvento;
+import br.com.swconsultoria.nfe.schema_4.enviNFe.TEnviNFe;
+import br.com.swconsultoria.nfe.schema_4.enviNFe.TNFe;
+import br.com.swconsultoria.nfe.schema_4.enviNFe.TNfeProc;
+import br.com.swconsultoria.nfe.schema_4.enviNFe.TRetEnviNFe;
+import br.com.swconsultoria.nfe.schema_4.retConsReciNFe.TRetConsReciNFe;
+import br.com.swconsultoria.nfe.schema_4.retConsSitNFe.TRetConsSitNFe;
+import br.com.swconsultoria.nfe.schema_4.retConsStatServ.TRetConsStatServ;
+import br.com.swconsultoria.nfe.util.CancelamentoUtil;
+import br.com.swconsultoria.nfe.util.RetornoUtil;
+import br.com.swconsultoria.nfe.util.XmlNfeUtil;
 
 @Service
 public class NFeService {
@@ -60,21 +59,20 @@ public class NFeService {
 		return retorn;
 	}
 	
-	private ConfiguracoesWebNfe getConfig(String empresaID) {
+	private ConfiguracoesNfe getConfig(String empresaID) {
 		Certificado certificado = new Certificado();
-		ConfiguracoesWebNfe config = null;
+		ConfiguracoesNfe config = null;
 		try {
 			Empresa empresa = empresaRepository.findById(empresaID).get();
 			Configuracao configuracao = configuracaoService.getConfiguracao(empresaID);
 			
 			certificado = CertificadoService.certificadoPfx(storageService.getPath(empresaID, configuracao.getCertificadoFile()), configuracao.getCertificadoSenha());  
-			config = ConfiguracoesWebNfe.iniciaConfiguracoes(
-					Estados.valueOf(empresa.getMunicipio().getUF().toString()),
-	                ConstantesUtil.AMBIENTE.PRODUCAO,
+			config = ConfiguracoesNfe.criarConfiguracoes(
+					EstadosEnum.valueOf(empresa.getMunicipio().getUF().toString()),
+					AmbienteEnum.HOMOLOGACAO,
 	                certificado,
-	                MethodHandles.lookup().lookupClass().getResource("/schemas").getPath(),
-	                false);
-		} catch (CertificadoException e) {
+	                MethodHandles.lookup().lookupClass().getResource("/schemas").getPath());
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
         
@@ -84,7 +82,7 @@ public class NFeService {
 	public TRetConsStatServ statusServico(String empresaID) {
 		TRetConsStatServ retorno = null;
 		try {
-            retorno = NfeWeb.statusServico(getConfig(empresaID), ConstantesUtil.NFE);
+            retorno = Nfe.statusServico(getConfig(empresaID), DocumentoEnum.NFE);
             System.out.println("Status:" + retorno.getCStat());
             System.out.println("Motivo:" + retorno.getXMotivo());
             System.out.println("Data:" + retorno.getDhRecbto());
@@ -102,10 +100,10 @@ public class NFeService {
 		retorno.setUf(uf);
 		retorno.setNumDoc(cnpj);
 		
-		ConfiguracoesWebNfe config = getConfig(nf.getEmpresa().getId());
+		ConfiguracoesNfe config = getConfig(nf.getEmpresa().getId());
 		
 		try {
-            TNFe nfe = NFeConversor.getnFe(nf, config.getAmbiente());
+            TNFe nfe = NFeConversor.getnFe(nf, config.getAmbiente().getCodigo());
 
             TEnviNFe enviNFe = new TEnviNFe();
             enviNFe.setVersao("4.00");
@@ -113,12 +111,12 @@ public class NFeService {
             enviNFe.setIndSinc("0");
             enviNFe.getNFe().add(nfe);
             
-            enviNFe = NfeWeb.montaNfe(config, enviNFe, false);
+            enviNFe = Nfe.montaNfe(config, enviNFe, false);
             
-            nf.setXml(XmlUtil.objectToXml(enviNFe));
+            nf.setXml(XmlNfeUtil.objectToXml(enviNFe));
             repository.save(nf);
             
-            TRetEnviNFe retornoEnviNFe = NfeWeb.enviarNfe(config, enviNFe, ConstantesUtil.NFE);
+            TRetEnviNFe retornoEnviNFe = Nfe.enviarNfe(config, enviNFe, DocumentoEnum.NFE);
             retorno.setData(retornoEnviNFe.getDhRecbto());
             retorno.setStatus(retornoEnviNFe.getCStat());
             retorno.setMotivo(retornoEnviNFe.getXMotivo());
@@ -143,11 +141,11 @@ public class NFeService {
 		NFeDTO retornar = new NFeDTO();
 		
 		try {
-			ConfiguracoesWebNfe config = getConfig(retornoEnvio.getEmpresaID());
+			ConfiguracoesNfe config = getConfig(retornoEnvio.getEmpresaID());
 			
 			TRetConsReciNFe retornoNfe;
 	        while (true) {
-	            retornoNfe = NfeWeb.consultaRecibo(config, retornoEnvio.getRecibo(), ConstantesUtil.NFE);
+	            retornoNfe = Nfe.consultaRecibo(config, retornoEnvio.getRecibo(), DocumentoEnum.NFE);
 	            if (retornoNfe.getCStat().equals(StatusEnum.LOTE_EM_PROCESSAMENTO.getCodigo())) {
 	                System.out.println("Lote Em Processamento, vai tentar novamente apos 2 Segundo.");
 	                Thread.sleep(2000);
@@ -180,9 +178,9 @@ public class NFeService {
 	        } else {
 	        	NotaFiscal nf = repository.findById(retornoEnvio.getIdNota()).get();
 		        
-		        TEnviNFe enviNFe = XmlUtil.xmlToObject(nf.getXml(), TEnviNFe.class);
+		        TEnviNFe enviNFe = XmlNfeUtil.xmlToObject(nf.getXml(), TEnviNFe.class);
 		        
-		        String xmlProc = XmlUtil.criaNfeProc(enviNFe, retornoNfe.getProtNFe().get(0));
+		        String xmlProc = XmlNfeUtil.criaNfeProc(enviNFe, retornoNfe.getProtNFe().get(0));
 		        nf.setXml(xmlProc);
 		        nf.setSitNfe("Autorizada");
 		        repository.save(nf);
@@ -206,74 +204,28 @@ public class NFeService {
 			
 			String cnpj = nf.getEmpresa().getNumDoc().replaceAll("[^0-9,]", "");
 			
-			ConfiguracoesWebNfe config = getConfig(cancelamento.getEmpresaID());
+			ConfiguracoesNfe config = getConfig(cancelamento.getEmpresaID());
 			
-			TNfeProc nfeProc = XmlUtil.xmlToObject(nf.getXml(), TNfeProc.class);
+			TNfeProc nfeProc = XmlNfeUtil.xmlToObject(nf.getXml(), TNfeProc.class);
 						
 			String chave = nf.getChave().replaceAll("[^0-9,]", "");
             String protocolo = nfeProc.getProtNFe().getInfProt().getNProt();
-            String nSeq = "1";
-            if(nf.getProcEventoNFe() != null) {
-            	nSeq = String.valueOf(nf.getProcEventoNFe().size() + 1);
-            }            
-
-            String id = "ID" + ConstantesUtil.EVENTO.CANCELAR + chave + "01";
-
-            TEnvEvento enviEvento = new TEnvEvento();
-            enviEvento.setVersao(ConstantesUtil.VERSAO.EVENTO_CANCELAMENTO);
-            enviEvento.setIdLote("1");
-
-            TEvento eventoCancela = new TEvento();
-            eventoCancela.setVersao(ConstantesUtil.VERSAO.EVENTO_CANCELAMENTO);
-
-            TEvento.InfEvento infoEvento = new TEvento.InfEvento();
-            infoEvento.setId(id);
-            infoEvento.setChNFe(chave);
-            infoEvento.setCOrgao(String.valueOf(config.getEstado().getCodigoIbge()));
-            infoEvento.setTpAmb(config.getAmbiente());
-            infoEvento.setCNPJ(cnpj);
-
-            infoEvento.setDhEvento(XmlUtil.dataNfe());
-            infoEvento.setTpEvento(ConstantesUtil.EVENTO.CANCELAR);
-            infoEvento.setNSeqEvento(nSeq);
-            infoEvento.setVerEvento(ConstantesUtil.VERSAO.EVENTO_CANCELAMENTO);
-
-            TEvento.InfEvento.DetEvento detEvento = new TEvento.InfEvento.DetEvento();
-            detEvento.setVersao(ConstantesUtil.VERSAO.EVENTO_CANCELAMENTO);
-            detEvento.setDescEvento("Cancelamento");
-            detEvento.setNProt(protocolo);
-            detEvento.setXJust(cancelamento.getMotivo());
-            infoEvento.setDetEvento(detEvento);
-            eventoCancela.setInfEvento(infoEvento);
-            enviEvento.getEvento().add(eventoCancela);
             
-            String xml = XmlUtil.objectToXml(enviEvento);
-			xml = xml.replaceAll(" xmlns:ns2=\"http://www.w3.org/2000/09/xmldsig#\"", "");
-			xml = xml.replaceAll("<evento v", "<evento xmlns=\"http://www.portalfiscal.inf.br/nfe\" v");
-			
-			xml = Assinar.assinaNfe(config, xml, Assinar.EVENTO);
-			System.out.println(xml);						
-			String xmlRetEnvEvento = Eventos.enviarEvento(CertificadoUtil.iniciaConfiguracoes(config), xml, ConstantesUtil.EVENTO.CANCELAR, false, ConstantesUtil.NFE);
+            Evento cancela = new Evento();
+            cancela.setChave(chave);
+            cancela.setProtocolo(protocolo);
+            cancela.setCnpj(cnpj);
+            cancela.setMotivo(cancelamento.getMotivo());
+            cancela.setDataEvento(LocalDateTime.now());
 
-            TRetEnvEvento retorno = XmlUtil.xmlToObject(xmlRetEnvEvento, TRetEnvEvento.class);
+            TEnvEvento enviEvento = CancelamentoUtil.montaCancelamento(cancela, config);
 
-            if (!StatusEnum.LOTE_EVENTO_PROCESSADO.getCodigo().equals(retorno.getCStat())) {
-                throw new NfeException("Motivo:" + retorno.getCStat() + " - Motivo:" + retorno.getXMotivo());
-            }
+            TRetEnvEvento retorno = Nfe.cancelarNfe(config, enviEvento, true, DocumentoEnum.NFE);
 
-            if (!StatusEnum.EVENTO_VINCULADO.getCodigo().equals(retorno.getRetEvento().get(0).getInfEvento().getCStat())) {
-                throw new NfeException("Motivo: " + retorno.getRetEvento().get(0).getInfEvento().getCStat() + " - " + retorno.getRetEvento().get(0).getInfEvento().getXMotivo());
-            }
-            
-            enviEvento = XmlUtil.xmlToObject(xml, TEnvEvento.class);
-            // Cria TProcEventoNFe
-            TProcEvento procEvento = new TProcEvento();
-            procEvento.setVersao("1.00");
-            procEvento.setEvento(enviEvento.getEvento().get(0));
-            procEvento.setRetEvento(retorno.getRetEvento().get(0));
+            RetornoUtil.validaCancelamento(retorno);
+
+            String xmlProcEventoNFe = CancelamentoUtil.criaProcEventoCancelamento(config, enviEvento, retorno.getRetEvento().get(0));
                         
-            String xmlProcEventoNFe = XmlUtil.objectToXml(procEvento);
-            
             if(nf.getProcEventoNFe() == null) { nf.setProcEventoNFe(new ArrayList<String>()); }
             nf.getProcEventoNFe().add(xmlProcEventoNFe);
             nf.setSitNfe("Cancelada");
@@ -298,12 +250,12 @@ public class NFeService {
 		try {			
 			NotaFiscal nf = repository.findById(consulta.getIdNota()).get();
 			
-			ConfiguracoesWebNfe config = getConfig(consulta.getEmpresaID());
+			ConfiguracoesNfe config = getConfig(consulta.getEmpresaID());
 			
 			String chave = nf.getChave();
-            TRetConsSitNFe retorno = NfeWeb.consultaXml(config, chave, ConstantesUtil.NFE);
+            TRetConsSitNFe retorno = Nfe.consultaXml(config, chave, DocumentoEnum.NFE);
                         
-            String xmlRetorno = XmlUtil.objectToXml(retorno);
+            String xmlRetorno = XmlNfeUtil.objectToXml(retorno);
             
             retornar.setIdNota(consulta.getIdNota());
             retornar.setSucesso(true);
