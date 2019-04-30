@@ -40,6 +40,14 @@ public class NFeEndpoint {
 		return retorn != null ? ResponseEntity.ok(retorn) : ResponseEntity.notFound().build();				
 	}
 	
+	@PostMapping(value = "/danfe", produces = "application/pdf")
+	public ResponseEntity<byte[]> danfes(@RequestBody String[] idNota) {
+		
+		byte[] retorn = service.gerarPDF(idNota);
+		
+		return retorn != null ? ResponseEntity.ok(retorn) : ResponseEntity.notFound().build();				
+	}
+	
 	@PostMapping("/enviar")
 	public ResponseEntity<NFeDTO> enviar(@Valid @RequestBody NotaFiscal nf) {		
 		NFeDTO retorn = service.enviar(nf);

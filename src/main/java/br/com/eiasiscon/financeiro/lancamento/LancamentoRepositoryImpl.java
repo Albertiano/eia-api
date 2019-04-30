@@ -46,6 +46,8 @@ public class LancamentoRepositoryImpl implements LancamentoRepositoryCustom{
 		
 		query.with(pageable);
 		
+		query.fields().exclude("empresa").exclude("contato.empresa").exclude("conta.empresa").exclude("planoContas.empresa").exclude("centroCustos.empresa");
+		
 		List<Lancamento> list = operations.find(query, Lancamento.class);
 		
 	    return PageableExecutionUtils.getPage(list, pageable,

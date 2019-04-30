@@ -150,6 +150,14 @@ public class NotaFiscalEndpoint {
 		return retorn != null ? ResponseEntity.ok(retorn) : ResponseEntity.notFound().build();
 	}
 	
+	@PostMapping(value = "/exportar", produces = "application/zip")
+	public ResponseEntity<byte[]> exportar(@RequestBody String[] idNota) {
+		
+		byte[] retorn = service.exportar(idNota);
+		
+		return retorn != null ? ResponseEntity.ok(retorn) : ResponseEntity.notFound().build();
+	}
+	
 	@GetMapping(value = "/exportar", produces = "application/zip")
 	public ResponseEntity<byte[]> exportar(@RequestParam String idNota) {
 		

@@ -119,6 +119,66 @@ public class NotaFiscalService extends BaseService<NotaFiscal, String> {
 		return null;
 	}
 	
+	public byte[] exportar(String[] idNota) {
+		try {
+		
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(byteArrayOutputStream);
+        ZipOutputStream zipOutputStream = new ZipOutputStream(bufferedOutputStream);
+        
+        for(String id : idNota) {
+			NotaFiscal nf = repository.findById(id).get();
+        	
+        	if(nf.getSitNfe().equals("Autorizada")) {
+        		File fileToZip = new File(nf.getChave().concat("-procNFe.xml"));
+                zipOutputStream.putNextEntry(new ZipEntry(fileToZip.getName()));
+                
+                ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(nf.getXml().getBytes());
+
+                IOUtils.copy(byteArrayInputStream, zipOutputStream);
+        	}
+        	
+        	if(nf.getSitNfe().equals("Cancelada")) {
+        		File fileToZip = new File(nf.getChave().concat("-procNFe.xml"));
+                zipOutputStream.putNextEntry(new ZipEntry(fileToZip.getName()));
+                
+                ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(nf.getXml().getBytes());
+
+                IOUtils.copy(byteArrayInputStream, zipOutputStream);
+                
+        		File fileToZipCancel = new File(nf.getChave().concat("-procEvento.xml"));
+                zipOutputStream.putNextEntry(new ZipEntry(fileToZipCancel.getName()));
+                
+                ByteArrayInputStream byteArrayInputStreamCancel = new ByteArrayInputStream(nf.getProcEventoNFe().get(0).getBytes());
+
+                IOUtils.copy(byteArrayInputStreamCancel, zipOutputStream);
+        	}
+                        
+        }
+        zipOutputStream.closeEntry();
+        
+        if (zipOutputStream != null) {
+            zipOutputStream.finish();
+            zipOutputStream.flush();
+            IOUtils.closeQuietly(zipOutputStream);
+        }
+        
+        IOUtils.closeQuietly(bufferedOutputStream);
+        IOUtils.closeQuietly(byteArrayOutputStream);
+        try {
+			Files.write(Paths.get(System.getProperty("user.home") +"/notas.zip"), byteArrayOutputStream.toByteArray());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+        
+        return byteArrayOutputStream.toByteArray();
+        
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	public byte[] gerarZip(Date ini, Date fim, String empresa) {
 		try {
 		

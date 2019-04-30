@@ -44,6 +44,8 @@ public class ContatoRepositoryImpl implements ContatoRepositoryCustom{
 		
 		query.with(pageable);
 		
+		query.fields().exclude("empresa");
+		
 		List<Contato> list = operations.find(query, Contato.class);
 	    return PageableExecutionUtils.getPage(list, pageable,
 	            () -> operations.count(query, Contato.class));

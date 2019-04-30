@@ -1,8 +1,12 @@
 package br.com.eiasiscon.nfe;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.lang.invoke.MethodHandles;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import javax.xml.bind.JAXBException;
 
@@ -38,6 +42,12 @@ import br.com.swconsultoria.nfe.schema_4.retConsStatServ.TRetConsStatServ;
 import br.com.swconsultoria.nfe.util.CancelamentoUtil;
 import br.com.swconsultoria.nfe.util.RetornoUtil;
 import br.com.swconsultoria.nfe.util.XmlNfeUtil;
+import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JRPrintPage;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRXmlDataSource;
 
 @Service
 public class NFeService {
@@ -50,6 +60,42 @@ public class NFeService {
 	private ConfiguracaoService configuracaoService;
 	@Autowired
 	private StorageService storageService;
+	
+	public byte[] gerarPDF(String[] idNota) {
+		try {
+
+			HashMap<String, Object> parametros = new HashMap<String, Object>();
+			parametros.put("LOGO", System.getProperty("user.home")+"/EIASisCon/logo.png");
+			/**
+			JasperDesign design = JRXmlLoader.load(getClass().getResourceAsStream("/relatorios/danfeRetrato.jrxml"));			
+			JasperReport jasperReport = JasperCompileManager.compileReport(design);
+			*/
+			InputStream jasperReport = getClass().getResourceAsStream("/relatorios/danfeRetrato.jasper");
+			
+			JasperPrint paginas = JasperFillManager.fillReport(jasperReport, parametros,new JREmptyDataSource());
+			paginas.removePage(0);
+			
+			for(String id : idNota) {
+				NotaFiscal nf = repository.findById(id).get();
+				if(nf.getXml() != null) {
+					InputStream stream = new ByteArrayInputStream(nf.getXml().getBytes());
+					JRXmlDataSource xmlPath = new JRXmlDataSource(stream, "/nfeProc/NFe/infNFe/det");
+
+					JasperPrint jp = JasperFillManager.fillReport(getClass().getResourceAsStream("/relatorios/danfeRetrato.jasper"), parametros, xmlPath);
+
+					List<JRPrintPage> pgs = jp.getPages();
+					for (JRPrintPage pg : pgs) {
+						paginas.addPage(pg);
+					}
+				}
+			}
+			
+			return JasperExportManager.exportReportToPdf(paginas);
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+		return null;
+	}
 	
 	public byte[] GerarDanfe(String idNota) {
 		NotaFiscal nf = repository.findById(idNota).get();
@@ -69,7 +115,7 @@ public class NFeService {
 			certificado = CertificadoService.certificadoPfx(storageService.getPath(empresaID, configuracao.getCertificadoFile()), configuracao.getCertificadoSenha());  
 			config = ConfiguracoesNfe.criarConfiguracoes(
 					EstadosEnum.valueOf(empresa.getMunicipio().getUF().toString()),
-					AmbienteEnum.HOMOLOGACAO,
+					AmbienteEnum.PRODUCAO,
 	                certificado,
 	                MethodHandles.lookup().lookupClass().getResource("/schemas").getPath());
 		} catch (Exception e) {
@@ -175,6 +221,28 @@ public class NFeService {
 	        if(retornoNfe.getProtNFe().get(0).getInfProt().getCStat().equals("204")) {
 	        	retornoEnvio.setRecibo(retornoNfe.getProtNFe().get(0).getInfProt().getXMotivo().replaceAll("[^0-9,]", "").substring(44));
 	        	consultaRecibo(retornoEnvio);
+	        } else if(retornoNfe.getProtNFe().get(0).getInfProt().getCStat().equals("205")){
+	        	NotaFiscal nf = repository.findById(retornoEnvio.getIdNota()).get();
+		        
+		        TEnviNFe enviNFe = XmlNfeUtil.xmlToObject(nf.getXml(), TEnviNFe.class);
+		        
+		        String xmlProc = XmlNfeUtil.criaNfeProc(enviNFe, retornoNfe.getProtNFe().get(0));
+		        nf.setXml(xmlProc);
+		        nf.setSitNfe("Denegada");
+		        repository.save(nf);
+
+		        retornar.setData(xmlProc);
+	        } else if(retornoNfe.getProtNFe().get(0).getInfProt().getCStat().equals("302")){
+	        	NotaFiscal nf = repository.findById(retornoEnvio.getIdNota()).get();
+		        
+		        TEnviNFe enviNFe = XmlNfeUtil.xmlToObject(nf.getXml(), TEnviNFe.class);
+		        
+		        String xmlProc = XmlNfeUtil.criaNfeProc(enviNFe, retornoNfe.getProtNFe().get(0));
+		        nf.setXml(xmlProc);
+		        nf.setSitNfe("Denegada");
+		        repository.save(nf);
+
+		        retornar.setData(xmlProc);
 	        } else {
 	        	NotaFiscal nf = repository.findById(retornoEnvio.getIdNota()).get();
 		        
