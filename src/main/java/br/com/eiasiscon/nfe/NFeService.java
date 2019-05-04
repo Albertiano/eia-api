@@ -288,7 +288,7 @@ public class NFeService {
 
             TEnvEvento enviEvento = CancelamentoUtil.montaCancelamento(cancela, config);
 
-            TRetEnvEvento retorno = Nfe.cancelarNfe(config, enviEvento, true, DocumentoEnum.NFE);
+            TRetEnvEvento retorno = Nfe.cancelarNfe(config, enviEvento, false, DocumentoEnum.NFE);
 
             RetornoUtil.validaCancelamento(retorno);
 
