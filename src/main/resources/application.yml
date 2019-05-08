@@ -11,7 +11,7 @@ spring:
     data:
          mongodb:
            # uri: mongodb+srv://albertiano:Senha711990@api-bp2y8.mongodb.net/eiasiscon?retryWrites=true
-           uri: mongodb://localhost/eiasiscon
+           uri: mongodb://eiasiscon.com.br/eiasiscon
            # uri: mongodb://35.229.86.18/eiasiscon
            
 api:

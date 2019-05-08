@@ -219,7 +219,7 @@ public class NFeService {
 	        }
 	        
 	        if(retornoNfe.getProtNFe().get(0).getInfProt().getCStat().equals("204")) {
-	        	retornoEnvio.setRecibo(retornoNfe.getProtNFe().get(0).getInfProt().getXMotivo().replaceAll("[^0-9,]", "").substring(44));
+	        	retornoEnvio.setRecibo(retornoNfe.getProtNFe().get(0).getInfProt().getXMotivo().replaceAll("[^0-9,]", "").substring(44, 59));
 	        	consultaRecibo(retornoEnvio);
 	        } else if(retornoNfe.getProtNFe().get(0).getInfProt().getCStat().equals("205")){
 	        	NotaFiscal nf = repository.findById(retornoEnvio.getIdNota()).get();
