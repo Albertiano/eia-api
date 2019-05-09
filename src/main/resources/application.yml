@@ -10,9 +10,7 @@ spring:
                max-request-size: 3000KB
     data:
          mongodb:
-           # uri: mongodb+srv://albertiano:Senha711990@api-bp2y8.mongodb.net/eiasiscon?retryWrites=true
-           uri: mongodb://eiasiscon.com.br/eiasiscon
-           # uri: mongodb://35.229.86.18/eiasiscon
+           uri: mongodb://albertiano:Senha711990@localhost/eiasiscon
            
 api:
    security:
