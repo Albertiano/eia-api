@@ -1,4 +1,4 @@
-package br.com.eiasiscon.nfe;
+package br.com.eiasiscon.nfe.common;
 
 import java.math.BigDecimal;
 

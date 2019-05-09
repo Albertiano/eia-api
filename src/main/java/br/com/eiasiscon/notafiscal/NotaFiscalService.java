@@ -23,8 +23,8 @@ import org.springframework.stereotype.Service;
 
 import br.com.eiasiscon.base.BaseService;
 import br.com.eiasiscon.municipio.UF;
-import br.com.eiasiscon.nfe.NFeChaveAcesso;
 import br.com.eiasiscon.nfe.NFeService;
+import br.com.eiasiscon.nfe.common.NFeChaveAcesso;
 import br.com.eiasiscon.notafiscal.item.DetalheFiscal;
 import br.com.eiasiscon.notafiscal.item.ItemNotaFiscal;
 import br.com.eiasiscon.produto.Produto;

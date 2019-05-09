@@ -1,4 +1,4 @@
-package br.com.eiasiscon.nfe;
+package br.com.eiasiscon.nfe.common;
 
 import br.com.eiasiscon.notafiscal.NotaFiscal;
 import br.com.eiasiscon.util.ConversorDate;

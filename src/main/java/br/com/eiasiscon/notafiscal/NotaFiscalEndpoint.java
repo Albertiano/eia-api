@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.eiasiscon.municipio.UF;
-import br.com.eiasiscon.nfe.NFeChaveAcesso;
+import br.com.eiasiscon.nfe.common.NFeChaveAcesso;
 import br.com.eiasiscon.notafiscal.ide.FinNFe;
 import br.com.eiasiscon.notafiscal.ide.IdDest;
 import br.com.eiasiscon.notafiscal.ide.IndFinal;

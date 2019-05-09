@@ -1,4 +1,4 @@
-package br.com.eiasiscon.nfe;
+package br.com.eiasiscon.nfe.common;
 
 public class NFeDTO {
 	private String empresaID;

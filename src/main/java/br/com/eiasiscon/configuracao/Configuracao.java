@@ -19,6 +19,12 @@ public class Configuracao extends BaseEntity implements Serializable{
 	private String certificadoFile;
 	private String certificadoSenha;
 	private String logoFile;
+	private Long serieNFe;
+	private Long numeroNFe;
+	private String idCsc;
+	private String csc;
+	private Long serieNFCe;
+	private Long numeroNFCe;
 	
 	public Empresa getEmpresa() {
 		return empresa;
@@ -43,6 +49,42 @@ public class Configuracao extends BaseEntity implements Serializable{
 	}
 	public void setLogoFile(String logoFile) {
 		this.logoFile = logoFile;
+	}
+	public Long getSerieNFe() {
+		return serieNFe;
+	}
+	public void setSerieNFe(Long serieNFe) {
+		this.serieNFe = serieNFe;
+	}
+	public Long getNumeroNFe() {
+		return numeroNFe;
+	}
+	public void setNumeroNFe(Long numeroNFe) {
+		this.numeroNFe = numeroNFe;
+	}
+	public String getIdCsc() {
+		return idCsc;
+	}
+	public void setIdCsc(String idCsc) {
+		this.idCsc = idCsc;
+	}
+	public String getCsc() {
+		return csc;
+	}
+	public void setCsc(String csc) {
+		this.csc = csc;
+	}
+	public Long getSerieNFCe() {
+		return serieNFCe;
+	}
+	public void setSerieNFCe(Long serieNFCe) {
+		this.serieNFCe = serieNFCe;
+	}
+	public Long getNumeroNFCe() {
+		return numeroNFCe;
+	}
+	public void setNumeroNFCe(Long numeroNFCe) {
+		this.numeroNFCe = numeroNFCe;
 	}
 
 }

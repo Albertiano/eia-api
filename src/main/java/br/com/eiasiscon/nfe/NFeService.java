@@ -17,6 +17,8 @@ import br.com.eiasiscon.configuracao.Configuracao;
 import br.com.eiasiscon.configuracao.ConfiguracaoService;
 import br.com.eiasiscon.empresa.Empresa;
 import br.com.eiasiscon.empresa.EmpresaRepository;
+import br.com.eiasiscon.nfe.common.NFeConversor;
+import br.com.eiasiscon.nfe.common.NFeDTO;
 import br.com.eiasiscon.notafiscal.NotaFiscal;
 import br.com.eiasiscon.notafiscal.NotaFiscalRepository;
 import br.com.eiasiscon.uploadfiles.StorageService;
