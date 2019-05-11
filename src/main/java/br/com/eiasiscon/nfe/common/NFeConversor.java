@@ -213,7 +213,6 @@ public class NFeConversor {
             	}
         	}        	
         }
-        dest.setCNPJ(c.getNumDoc().replaceAll("[^0-9]", ""));
         dest.setXNome(c.getNome().trim());
 
         TEndereco enderDest = new TEndereco();
