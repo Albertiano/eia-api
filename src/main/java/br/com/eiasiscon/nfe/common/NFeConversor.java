@@ -1888,8 +1888,15 @@ public class NFeConversor {
             }
             
             transporta.setXMun(t.getTransporta().getMunicipio().getxMun());
-            transporta.setUF(TUf.valueOf(t.getTransporta().getMunicipio().getUF().toString()));
-			transp.setTransporta(transporta);
+            
+            if (t.getTransporta().getMunicipio().getUF() != null ) {
+            	transporta.setUF(TUf.valueOf(t.getTransporta().getMunicipio().getUF().toString()));
+            }
+            
+            if(transporta.getXNome() != null) {
+            	transp.setTransporta(transporta);
+            }
+			
 		}
 
 
