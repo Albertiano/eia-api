@@ -16,6 +16,7 @@ public class PDV extends BaseEntity implements Serializable {
 	@DBRef
     private Empresa empresa;
 	
+	private String descricao;
 	private Boolean isExterno;
 	private Long serieNFe;
 	private Long numeroNFe;

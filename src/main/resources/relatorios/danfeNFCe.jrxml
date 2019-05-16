@@ -4,7 +4,7 @@
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="288"/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="NFCe"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="NFC-e"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageHeight" value="mm"/>
 	<property name="com.jaspersoft.studio.unit.pageWidth" value="mm"/>
