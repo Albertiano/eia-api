@@ -23,4 +23,47 @@ public class PDV extends BaseEntity implements Serializable {
 	private Long serieNFCe;
 	private Long numeroNFCe;
 	
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
+	}
+	public String getDescricao() {
+		return descricao;
+	}
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+	public Boolean getIsExterno() {
+		return isExterno;
+	}
+	public void setIsExterno(Boolean isExterno) {
+		this.isExterno = isExterno;
+	}
+	public Long getSerieNFe() {
+		return serieNFe;
+	}
+	public void setSerieNFe(Long serieNFe) {
+		this.serieNFe = serieNFe;
+	}
+	public Long getNumeroNFe() {
+		return numeroNFe;
+	}
+	public void setNumeroNFe(Long numeroNFe) {
+		this.numeroNFe = numeroNFe;
+	}
+	public Long getSerieNFCe() {
+		return serieNFCe;
+	}
+	public void setSerieNFCe(Long serieNFCe) {
+		this.serieNFCe = serieNFCe;
+	}
+	public Long getNumeroNFCe() {
+		return numeroNFCe;
+	}
+	public void setNumeroNFCe(Long numeroNFCe) {
+		this.numeroNFCe = numeroNFCe;
+	}
+	
 }
