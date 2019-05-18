@@ -1,4 +1,4 @@
-package br.com.eiasiscon.pdv;
+package br.com.eiasiscon.pdv.config;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -25,8 +25,8 @@ import br.com.eiasiscon.produto.unidade.UnidadeService;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/unidade")
-public class PDVEndpoint {
+@RequestMapping("/config-pdv")
+public class ConfigPdvEndpoint {
 	
 	@Autowired
 	private UnidadeService service;

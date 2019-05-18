@@ -1,4 +1,4 @@
-package br.com.eiasiscon.pdv;
+package br.com.eiasiscon.pdv.config;
 
 import java.util.List;
 
@@ -13,19 +13,19 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
 
 @Repository
-public class PDVRepositoryImpl implements PDVRepositoryCustom{
+public class ConfigPdvRepositoryImpl implements ConfigPdvRepositoryCustom{
 	
 	private final MongoOperations operations;
 
 	@Autowired
-	public PDVRepositoryImpl(MongoOperations operations) {
+	public ConfigPdvRepositoryImpl(MongoOperations operations) {
 
 		Assert.notNull(operations, "[Assertion failed] - this argument is required; it must not be null");
 		this.operations = operations;
 	}
 
 	@Override
-	public Page<PDV> find(String q, String empresa, Pageable pageable) {
+	public Page<ConfigPdv> find(String q, String empresa, Pageable pageable) {
 		Query query = new Query();
 		
 		query.addCriteria(
@@ -38,10 +38,10 @@ public class PDVRepositoryImpl implements PDVRepositoryCustom{
 		
 		query.with(pageable);
 		
-		List<PDV> list = operations.find(query, PDV.class);
+		List<ConfigPdv> list = operations.find(query, ConfigPdv.class);
 		
 	    return PageableExecutionUtils.getPage(list, pageable,
-	            () -> operations.count(query, PDV.class));
+	            () -> operations.count(query, ConfigPdv.class));
 	}
 
 }

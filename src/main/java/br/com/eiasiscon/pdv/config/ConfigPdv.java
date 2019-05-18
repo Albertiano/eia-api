@@ -1,4 +1,4 @@
-package br.com.eiasiscon.pdv;
+package br.com.eiasiscon.pdv.config;
 
 import java.io.Serializable;
 
@@ -9,7 +9,7 @@ import br.com.eiasiscon.base.BaseEntity;
 import br.com.eiasiscon.empresa.Empresa;
 
 @Document
-public class PDV extends BaseEntity implements Serializable {
+public class ConfigPdv extends BaseEntity implements Serializable {
 	
 	private static final long serialVersionUID = -4591790684476266712L;
 	
