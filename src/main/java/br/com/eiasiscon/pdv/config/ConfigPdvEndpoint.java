@@ -20,32 +20,29 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.eiasiscon.produto.unidade.Unidade;
-import br.com.eiasiscon.produto.unidade.UnidadeService;
-
 @CrossOrigin
 @RestController
 @RequestMapping("/config-pdv")
 public class ConfigPdvEndpoint {
 	
 	@Autowired
-	private UnidadeService service;
+	private ConfigPdvService service;
 		
 	@GetMapping
-	public Page<Unidade> procurar(@RequestParam String filter, @RequestParam String empresa, Pageable pageable) {
-		Page<Unidade> contatos =  service.find(filter, empresa, pageable);
+	public Page<ConfigPdv> procurar(@RequestParam String filter, @RequestParam String empresa, Pageable pageable) {
+		Page<ConfigPdv> contatos =  service.find(filter, empresa, pageable);
 		return contatos;
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Unidade> recuperar(@PathVariable String id) {
-		Unidade entity = service.retrieve(id);
+	public ResponseEntity<ConfigPdv> recuperar(@PathVariable String id) {
+		ConfigPdv entity = service.retrieve(id);
 		return entity != null ? ResponseEntity.ok(entity) : ResponseEntity.notFound().build();
 	}
 	
 	@PostMapping
-	public ResponseEntity<Unidade> criar(@Valid @RequestBody Unidade entity, HttpServletResponse response) {
-		Unidade entitySaved = service.create(entity);
+	public ResponseEntity<ConfigPdv> criar(@Valid @RequestBody ConfigPdv entity, HttpServletResponse response) {
+		ConfigPdv entitySaved = service.create(entity);
 		return ResponseEntity.status(HttpStatus.CREATED).body(entitySaved);
 	}
 	
@@ -56,8 +53,8 @@ public class ConfigPdvEndpoint {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Unidade> atualizar(@PathVariable String id, @Valid @RequestBody Unidade entity) {
-		Unidade entitySaved = service.update(id, entity);
+	public ResponseEntity<ConfigPdv> atualizar(@PathVariable String id, @Valid @RequestBody ConfigPdv entity) {
+		ConfigPdv entitySaved = service.update(id, entity);
 		return ResponseEntity.ok(entitySaved);
 	}
 
