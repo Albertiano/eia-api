@@ -117,7 +117,7 @@ public class NFeService {
 			certificado = CertificadoService.certificadoPfx(storageService.getPath(empresaID, configuracao.getCertificadoFile()), configuracao.getCertificadoSenha());  
 			config = ConfiguracoesNfe.criarConfiguracoes(
 					EstadosEnum.valueOf(empresa.getMunicipio().getUF().toString()),
-					AmbienteEnum.HOMOLOGACAO,
+					AmbienteEnum.PRODUCAO,
 	                certificado,
 	                MethodHandles.lookup().lookupClass().getResource("/schemas").getPath());
 		} catch (Exception e) {

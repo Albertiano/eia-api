@@ -31,8 +31,7 @@ public class ConfigPdvRepositoryImpl implements ConfigPdvRepositoryCustom{
 		query.addCriteria(
 				Criteria.where("empresa.id").is(empresa)
 				.orOperator(
-							Criteria.where("sigla").regex(q,"i"), 
-							Criteria.where("desc").regex(q,"i")
+							Criteria.where("descricao").regex(q,"i")
 				)
 		);
 		
