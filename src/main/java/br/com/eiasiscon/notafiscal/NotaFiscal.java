@@ -22,6 +22,7 @@ import br.com.eiasiscon.notafiscal.item.ItemNotaFiscal;
 import br.com.eiasiscon.notafiscal.pagamento.Pagamento;
 import br.com.eiasiscon.notafiscal.total.Total;
 import br.com.eiasiscon.notafiscal.transporte.Transporte;
+import br.com.eiasiscon.pdv.config.ConfigPdv;
 
 @Document
 public class NotaFiscal  extends BaseEntity {
@@ -30,6 +31,8 @@ public class NotaFiscal  extends BaseEntity {
 	
 	@DBRef
     private Empresa empresa;
+	@DBRef
+    private ConfigPdv pdv;
 	private String sitNfe;
 	private String versao;
 	private String chave;
@@ -292,6 +295,12 @@ public class NotaFiscal  extends BaseEntity {
 	}
 	public void setXml(String xml) {
 		this.xml = xml;
+	}
+	public ConfigPdv getPdv() {
+		return pdv;
+	}
+	public void setPdv(ConfigPdv pdv) {
+		this.pdv = pdv;
 	}
 
 }

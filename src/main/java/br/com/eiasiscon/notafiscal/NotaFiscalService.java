@@ -27,6 +27,8 @@ import br.com.eiasiscon.nfe.NFeService;
 import br.com.eiasiscon.nfe.common.NFeChaveAcesso;
 import br.com.eiasiscon.notafiscal.item.DetalheFiscal;
 import br.com.eiasiscon.notafiscal.item.ItemNotaFiscal;
+import br.com.eiasiscon.pdv.config.ConfigPdv;
+import br.com.eiasiscon.pdv.config.ConfigPdvService;
 import br.com.eiasiscon.produto.Produto;
 import br.com.eiasiscon.produto.ProdutoRepository;
 import br.com.eiasiscon.produto.tributacao.Destino;
@@ -50,6 +52,8 @@ public class NotaFiscalService extends BaseService<NotaFiscal, String> {
 	private ProdutoRepository repositoryProd;
 	@Autowired
 	private NFeService serviceNFe;
+	@Autowired
+	private ConfigPdvService pdvNFe;
 	
 	@Autowired
 	public void setJpaRepository(NotaFiscalRepository jpa) {
@@ -240,12 +244,28 @@ public class NotaFiscalService extends BaseService<NotaFiscal, String> {
 		return null;
 	}
 	
-	public int getMaxSerie(String empresa) {
-		return repository.maxSerie(empresa);
+	public int getSerieNFe(String idPdv) {
+		ConfigPdv pdv = pdvNFe.retrieve(idPdv);
+		return pdv.getSerieNFe();
 	}
 	
-	public int getProximoNumero(String empresa) {
-		return repository.maxNumero(empresa) + 1;
+	public int getSerieNFCe(String idPdv) {
+		ConfigPdv pdv = pdvNFe.retrieve(idPdv);
+		return pdv.getSerieNFCe();
+	}
+	
+	public int getNextNumeroNFe(String idPdv) {
+		ConfigPdv pdv = pdvNFe.retrieve(idPdv);
+		pdv.setNumeroNFe(pdv.getNumeroNFe() + 1);
+		pdvNFe.update(idPdv, pdv);
+		return pdv.getNumeroNFe();
+	}
+	
+	public int getNextNumeroNFCe(String idPdv) {
+		ConfigPdv pdv = pdvNFe.retrieve(idPdv);
+		pdv.setNumeroNFCe(pdv.getNumeroNFCe() + 1);
+		pdvNFe.update(idPdv, pdv);
+		return pdv.getNumeroNFCe();
 	}
 	
 	public NotaFiscal duplicar(String id) {
@@ -253,8 +273,8 @@ public class NotaFiscalService extends BaseService<NotaFiscal, String> {
 		entity.setId(null);
 		entity.setDhEmi(new Date());
 		entity.setDhSaiEnt(new Date());
-		entity.setSerie(getMaxSerie(entity.getEmpresa().getId()));
-		entity.setNumero(getProximoNumero(entity.getEmpresa().getId()));
+		entity.setSerie(getSerieNFe(entity.getPdv().getId()));
+		entity.setNumero(getNextNumeroNFe(entity.getPdv().getId()));
 		entity.setChave(NFeChaveAcesso.getChave(entity));
 		entity.setSitNfe("Digitação");
 		entity.setXml(null);

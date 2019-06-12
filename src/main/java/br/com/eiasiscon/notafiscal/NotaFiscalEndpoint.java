@@ -58,11 +58,20 @@ public class NotaFiscalEndpoint {
 	
 	@PostMapping
 	public ResponseEntity<NotaFiscal> criar(@Valid @RequestBody NotaFiscal entity, HttpServletResponse response) {
-		if (entity.getSerie() == null || entity.getSerie() == 0) {
-			entity.setSerie(service.getMaxSerie(entity.getEmpresa().getId()));
-		}
-		if (entity.getNumero() == null || entity.getNumero() == 0) {
-			entity.setNumero(service.getProximoNumero(entity.getEmpresa().getId()));
+		if( entity.getMod().equals("55")) {
+			if (entity.getSerie() == null || entity.getSerie() == 0) {
+				entity.setSerie(service.getSerieNFe(entity.getPdv().getId()));
+			}
+			if (entity.getNumero() == null || entity.getNumero() == 0) {
+				entity.setNumero(service.getNextNumeroNFe(entity.getPdv().getId()));
+			}
+		} else {
+			if (entity.getSerie() == null || entity.getSerie() == 0) {
+				entity.setSerie(service.getSerieNFCe(entity.getPdv().getId()));
+			}
+			if (entity.getNumero() == null || entity.getNumero() == 0) {
+				entity.setNumero(service.getNextNumeroNFCe(entity.getPdv().getId()));
+			}
 		}
 		entity.setChave(NFeChaveAcesso.getChave(entity));
 		

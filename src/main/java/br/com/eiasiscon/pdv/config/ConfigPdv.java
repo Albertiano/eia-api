@@ -18,10 +18,10 @@ public class ConfigPdv extends BaseEntity implements Serializable {
 	
 	private String descricao;
 	private Boolean isExterno;
-	private Long serieNFe;
-	private Long numeroNFe;
-	private Long serieNFCe;
-	private Long numeroNFCe;
+	private int serieNFe;
+	private int numeroNFe;
+	private int serieNFCe;
+	private int numeroNFCe;
 	
 	public Empresa getEmpresa() {
 		return empresa;
@@ -41,28 +41,28 @@ public class ConfigPdv extends BaseEntity implements Serializable {
 	public void setIsExterno(Boolean isExterno) {
 		this.isExterno = isExterno;
 	}
-	public Long getSerieNFe() {
+	public int getSerieNFe() {
 		return serieNFe;
 	}
-	public void setSerieNFe(Long serieNFe) {
+	public void setSerieNFe(int serieNFe) {
 		this.serieNFe = serieNFe;
 	}
-	public Long getNumeroNFe() {
+	public int getNumeroNFe() {
 		return numeroNFe;
 	}
-	public void setNumeroNFe(Long numeroNFe) {
+	public void setNumeroNFe(int numeroNFe) {
 		this.numeroNFe = numeroNFe;
 	}
-	public Long getSerieNFCe() {
+	public int getSerieNFCe() {
 		return serieNFCe;
 	}
-	public void setSerieNFCe(Long serieNFCe) {
+	public void setSerieNFCe(int serieNFCe) {
 		this.serieNFCe = serieNFCe;
 	}
-	public Long getNumeroNFCe() {
+	public int getNumeroNFCe() {
 		return numeroNFCe;
 	}
-	public void setNumeroNFCe(Long numeroNFCe) {
+	public void setNumeroNFCe(int numeroNFCe) {
 		this.numeroNFCe = numeroNFCe;
 	}
 	
