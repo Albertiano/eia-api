@@ -302,7 +302,10 @@ public class NotaFiscalService extends BaseService<NotaFiscal, String> {
 		i.setvOutro(BigDecimal.ZERO);
 		i.setNoValorNota(false);
 		
-		Destino t = getDestino(p.getTributacao(), uf);		
+		Destino t = getDestino(p.getTributacao(), uf);	
+		
+		
+		
 		DetalheFiscal d  = new DetalheFiscal();
 		d.setCfop(t.getCfop());
 		d.setExtipi(p.getExtipi());
