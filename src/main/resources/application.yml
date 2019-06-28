@@ -1,0 +1,23 @@
+server:
+      port: 8090
+      servlet:
+            context-path: /api
+spring:
+    profiles: default
+    servlet:
+         multipart:
+               max-file-size: 3000KB
+               max-request-size: 3000KB
+    data:
+         mongodb:
+           # uri: mongodb://albertiano:Senha711990@eiasiscon.com.br/eiasiscon?authSource=admin
+           # uri: mongodb://albertiano:Senha711990@localhost/eiasiscon?authSource=admin
+           uri: mongodb+srv://albertiano:Senha711990@api-bp2y8.mongodb.net/eiasiscon?retryWrites=true
+           
+api:
+   security:
+         jwt:
+            tokenExpirationTime: 240 # Number of minutes
+            refreshTokenExpTime: 540 # Minutes
+            tokenIssuer: eiasiscon.com.br
+            tokenSigningKey: xm8EV6Hy5RMFK4EEACIDAwsf
