@@ -32,8 +32,10 @@ public class Contato extends BaseEntity {
     private String bairro;
     private String cep;
     @NotNull
+    @DBRef
     private Municipio municipio;
     @NotNull
+    @DBRef
     private Pais pais;
     @DBRef
     private Empresa empresa;

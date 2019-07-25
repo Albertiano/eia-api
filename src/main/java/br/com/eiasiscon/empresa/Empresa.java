@@ -32,8 +32,10 @@ public class Empresa extends BaseEntity {
     private String bairro;
     private String cep;
     @NotNull
+    @DBRef
     private Municipio municipio;
     @NotNull
+    @DBRef
     private Pais pais;
     private String fantasia;
     private String IEST;

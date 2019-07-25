@@ -58,6 +58,7 @@ public class NotaFiscal  extends BaseEntity {
 	private String verProc = "4.00";
 	private Date dhCont;	
 	private String xJust;
+	@DBRef
 	private List<NFref> NFRef;
 	private Empresa emitente;
 	private Contato dest;

@@ -21,6 +21,7 @@ public class Produto  extends BaseEntity {
 	private String codigo;
     private String referencia;
     private String descricao;
+    @DBRef
     private Unidade unidade;
     private boolean desativado;
     private String ncm;
@@ -34,6 +35,7 @@ public class Produto  extends BaseEntity {
     private BigDecimal estoqueMin;
     private BigDecimal estoque;    
     private String localizacao;
+    @DBRef
     private List<FornecedorProduto> fornecedores;
     @DBRef
     private Tributacao tributacao;
@@ -41,6 +43,7 @@ public class Produto  extends BaseEntity {
     private String genero;
     private String cEan;
     private String cEanTrib;
+    @DBRef
     private Unidade utrib;
     private BigDecimal vuntrib;
     

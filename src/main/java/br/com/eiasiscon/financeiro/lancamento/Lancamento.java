@@ -24,14 +24,18 @@ public class Lancamento extends BaseEntity {
     private Empresa empresa;
 	@NotNull
 	private Date competencia;
+	@DBRef
 	private Contato contato;
 	private String descricao;
 	private String documento;
 	private BigDecimal valor;
 	private TpLancamento tpLancamento;
 	private TpPagamento tpPagamento;
+	@DBRef
 	private Conta conta;	
+	@DBRef
 	private PlanoContas planoContas;
+	@DBRef
 	private CentroCustos centroCustos;
 	private String obs;
 	

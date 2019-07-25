@@ -2,13 +2,17 @@ package br.com.eiasiscon.produto;
 
 import java.math.BigDecimal;
 
+import org.springframework.data.mongodb.core.mapping.DBRef;
+
 import br.com.eiasiscon.contato.Contato;
 import br.com.eiasiscon.produto.unidade.Unidade;
 
 public class FornecedorProduto {
 	
+	@DBRef
 	private Contato fornecedor;
 	private String codFornecedor;
+	@DBRef
 	private Unidade unidFornecedor;
 	private BigDecimal fatorConversao;
 	
