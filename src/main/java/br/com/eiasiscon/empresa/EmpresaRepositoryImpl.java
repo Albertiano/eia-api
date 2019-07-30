@@ -38,8 +38,7 @@ public class EmpresaRepositoryImpl implements EmpresaRepositoryCustom{
 							Criteria.where("contato").regex(q,"i"),
 							Criteria.where("fantasia").regex(q,"i"),
 							Criteria.where("numDoc").regex(q,"i"),
-							Criteria.where("bairro").regex(q,"i"),
-							Criteria.where("municipio.xMun").regex(q,"i")
+							Criteria.where("bairro").regex(q,"i")
 				)
 		);
 		

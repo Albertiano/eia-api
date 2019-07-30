@@ -35,12 +35,7 @@ public class LancamentoRepositoryImpl implements LancamentoRepositoryCustom{
 						Criteria.where("competencia").gte(filtro.getIni()).lte(filtro.getFim())
 				)
 				.orOperator(
-							Criteria.where("descricao").regex(filtro.getQ(),"i"),
-							Criteria.where("contato.nome").regex(filtro.getQ(),"i"),
-							Criteria.where("contato.fantasia").regex(filtro.getQ(),"i"),
-							Criteria.where("conta.descricao").regex(filtro.getQ(),"i"),
-							Criteria.where("planoContas.descricao").regex(filtro.getQ(),"i"),
-							Criteria.where("centroCustos.descricao").regex(filtro.getQ(),"i")
+							Criteria.where("descricao").regex(filtro.getQ(),"i")
 				)
 		);
 		
@@ -75,9 +70,7 @@ public class LancamentoRepositoryImpl implements LancamentoRepositoryCustom{
 						Criteria.where("competencia").gte(filtro.getIni()).lte(filtro.getFim())
 				)
 				.orOperator(
-							Criteria.where("descricao").regex(filtro.getQ(),"i"),
-							Criteria.where("contato.nome").regex(filtro.getQ(),"i"),
-							Criteria.where("contato.fantasia").regex(filtro.getQ(),"i")
+							Criteria.where("descricao").regex(filtro.getQ(),"i")
 				)
 		);
 		
