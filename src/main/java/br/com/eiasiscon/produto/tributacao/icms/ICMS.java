@@ -140,33 +140,48 @@ public class ICMS implements Serializable{
      * Valor do ICMS diferido
      */
     private BigDecimal vICMSDif;
+    /*
+     * Valor da Base de Cálculo do FCP
+     */
+    private BigDecimal vBCFCP;
+    /*
+     * Percentual do Fundo de Combate à Pobreza (FCP)
+     */
+    private BigDecimal pFCP;
+    /*
+     * Valor do Fundo de Combate à Pobreza (FCP)
+     */
+    private BigDecimal vFCP;
+    /*
+     * Valor da Base de Cálculo do FCP retido por Substituição Tributária
+     */
+    private BigDecimal vBCFCPST;
+    /*
+     * Percentual do FCP retido por Substituição Tributária
+     */
+    private BigDecimal pFCPST;
+    /*
+     * Valor do FCP retido por Substituição Tributária
+     */
+    private BigDecimal vFCPST;
+    /*
+     * Alíquota suportada pelo Consumidor Final
+     */
+    private BigDecimal pST;
+    /*
+     * Valor da Base de Cálculo do FCP retido anteriormente
+     */
+    private BigDecimal vBCFCPSTRet;
+    /*
+     * Percentual do FCP retido anteriormente por Substituição Tributária
+     */
+    private BigDecimal pFCPSTRet;
+    /*
+     * Valor do FCP retido anteriormente por Substituição Tributária
+     */
+    private BigDecimal vFCPSTRet;
 
     public ICMS() {
-    }
-
-    public ICMS(Origem origem, CST_ICMS cstICMS, ModBC modBCICMS, BigDecimal vBCICMS, BigDecimal pRedBCICMS, BigDecimal pICMS, BigDecimal vICMS, MotDesICMS motDesICMS, ModBCST modBCST, BigDecimal pMVAST, BigDecimal pRedBCST, BigDecimal vBCST, BigDecimal pICMSST, BigDecimal vICMSST, BigDecimal vBCSTRet, BigDecimal vICMSSTRet, BigDecimal vBCSTDest, BigDecimal vICMSSTDest, BigDecimal pBCOp, UF UFST, BigDecimal pCredSN, BigDecimal vCredICMSSN) {
-        this.origem = origem;
-        this.cstICMS = cstICMS;
-        this.modBCICMS = modBCICMS;
-        this.vBCICMS = vBCICMS;
-        this.pRedBCICMS = pRedBCICMS;
-        this.pICMS = pICMS;
-        this.vICMS = vICMS;
-        this.motDesICMS = motDesICMS;
-        this.modBCST = modBCST;
-        this.pMVAST = pMVAST;
-        this.pRedBCST = pRedBCST;
-        this.vBCST = vBCST;
-        this.pICMSST = pICMSST;
-        this.vICMSST = vICMSST;
-        this.vBCSTRet = vBCSTRet;
-        this.vICMSSTRet = vICMSSTRet;
-        this.vBCSTDest = vBCSTDest;
-        this.vICMSSTDest = vICMSSTDest;
-        this.pBCOp = pBCOp;
-        this.UFST = UFST;
-        this.pCredSN = pCredSN;
-        this.vCredICMSSN = vCredICMSSN;
     }
 
     /**
@@ -507,5 +522,85 @@ public class ICMS implements Serializable{
 
 	public void setvICMSDif(BigDecimal vICMSDif) {
 		this.vICMSDif = vICMSDif;
+	}
+
+	public BigDecimal getvBCFCP() {
+		return vBCFCP;
+	}
+
+	public void setvBCFCP(BigDecimal vBCFCP) {
+		this.vBCFCP = vBCFCP;
+	}
+
+	public BigDecimal getpFCP() {
+		return pFCP;
+	}
+
+	public void setpFCP(BigDecimal pFCP) {
+		this.pFCP = pFCP;
+	}
+
+	public BigDecimal getvFCP() {
+		return vFCP;
+	}
+
+	public void setvFCP(BigDecimal vFCP) {
+		this.vFCP = vFCP;
+	}
+
+	public BigDecimal getvBCFCPST() {
+		return vBCFCPST;
+	}
+
+	public void setvBCFCPST(BigDecimal vBCFCPST) {
+		this.vBCFCPST = vBCFCPST;
+	}
+
+	public BigDecimal getpFCPST() {
+		return pFCPST;
+	}
+
+	public void setpFCPST(BigDecimal pFCPST) {
+		this.pFCPST = pFCPST;
+	}
+
+	public BigDecimal getvFCPST() {
+		return vFCPST;
+	}
+
+	public void setvFCPST(BigDecimal vFCPST) {
+		this.vFCPST = vFCPST;
+	}
+
+	public BigDecimal getpST() {
+		return pST;
+	}
+
+	public void setpST(BigDecimal pST) {
+		this.pST = pST;
+	}
+
+	public BigDecimal getvBCFCPSTRet() {
+		return vBCFCPSTRet;
+	}
+
+	public void setvBCFCPSTRet(BigDecimal vBCFCPSTRet) {
+		this.vBCFCPSTRet = vBCFCPSTRet;
+	}
+
+	public BigDecimal getpFCPSTRet() {
+		return pFCPSTRet;
+	}
+
+	public void setpFCPSTRet(BigDecimal pFCPSTRet) {
+		this.pFCPSTRet = pFCPSTRet;
+	}
+
+	public BigDecimal getvFCPSTRet() {
+		return vFCPSTRet;
+	}
+
+	public void setvFCPSTRet(BigDecimal vFCPSTRet) {
+		this.vFCPSTRet = vFCPSTRet;
 	}
 }

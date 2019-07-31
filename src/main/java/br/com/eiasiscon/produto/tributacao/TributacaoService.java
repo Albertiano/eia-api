@@ -18,6 +18,7 @@ import br.com.eiasiscon.produto.tributacao.cofins.COFINS;
 import br.com.eiasiscon.produto.tributacao.cofins.CST_COFINS;
 import br.com.eiasiscon.produto.tributacao.icms.CST_ICMS;
 import br.com.eiasiscon.produto.tributacao.icms.ICMS;
+import br.com.eiasiscon.produto.tributacao.icms.ModBC;
 import br.com.eiasiscon.produto.tributacao.icms.ModBCST;
 import br.com.eiasiscon.produto.tributacao.icms.Origem;
 import br.com.eiasiscon.produto.tributacao.ipi.CST_IPI;
@@ -73,9 +74,9 @@ public class TributacaoService extends BaseService<Tributacao, String> {
 
     private ICMS createICMS() {
         ICMS icms = new ICMS();
-        icms.setCstICMS(CST_ICMS.SN_202);
+        icms.setCstICMS(CST_ICMS.SN_102);
         icms.setOrigem(Origem.NACIONAL);
-        // icms.setModBCICMS(ModBC.OPERACAO);
+        icms.setModBCICMS(ModBC.OPERACAO);
         icms.setModBCST(ModBCST.PAUTA);
         icms.setvBCICMS(BigDecimal.ZERO);        
         icms.setpICMS(BigDecimal.ZERO);

@@ -4,45 +4,128 @@ import java.math.BigDecimal;
 
 public class Total {
 	
-	private BigDecimal vbc;
-	private BigDecimal vicms;
-	private BigDecimal vbcst;
-	private BigDecimal vst;
+	/*
+	 * Base de Cálculo do ICMS
+	*/
+	private BigDecimal vBC;
+	/*
+	 * Valor Total do ICMS
+	*/
+	private BigDecimal vICMS;
+	/*
+	 * Valor Total do ICMS desonerado
+	*/
+	private BigDecimal vICMSDeson;
+	/*
+	 * Base de Cálculo do ICMS ST
+	*/
+	private BigDecimal vBCST;
+	/*
+	 * Valor Total do ICMS ST
+	*/
+	private BigDecimal vST;
+	/*
+	 * Valor Total dos produtos e serviços
+	*/
 	private BigDecimal vProd;
+	/*
+	 * Valor Total do Frete
+	*/
 	private BigDecimal vFrete;
+	/*
+	 * Valor Total do Seguro
+	*/
 	private BigDecimal vSeg;
+	/*
+	 * Valor Total do Desconto
+	*/
 	private BigDecimal vDesc;
-	private BigDecimal vii;
-	private BigDecimal vipi;
-	private BigDecimal vpis;
-	private BigDecimal vcofins;
+	/*
+	 * Valor Total do II
+	*/
+	private BigDecimal vII;
+	/*
+	 * Valor Total do IPI
+	*/
+	private BigDecimal vIPI;
+	/*
+	 * Valor do PIS
+	*/
+	private BigDecimal vPIS;
+	/*
+	 * Valor da COFINS
+	*/
+	private BigDecimal vCOFINS;
+	/*
+	 * Outras Despesas acessórias
+	*/
 	private BigDecimal vOutro;
-	private BigDecimal vnf;
+	/*
+	 * Valor Total da NF-e
+	*/
+	private BigDecimal vNF;
+	/*
+	 * Valor aproximado total de tributos federais, estaduais e municipais.
+	*/
 	private BigDecimal vTotTrib;
+	/*
+	 * Valor total do ICMS relativo Fundo de Combate à Pobreza (FCP) da UF de destino
+	*/
+	private BigDecimal vFCPUFDest;
+	/*
+	 * Valor total do ICMS Interestadual para a UF de destino
+	*/
+	private BigDecimal vICMSUFDest;
+	/*
+	 * Valor total do ICMS Interestadual para a UF do remetente
+	*/
+	private BigDecimal vICMSUFRemet;
+	/*
+	 * Valor Total do FCP (Fundo de Combate à Pobreza)
+	*/
+	private BigDecimal vFCP;
+	/*
+	 * Valor Total do FCP (Fundo de Combate à Pobreza) retido por substituição tributária
+	*/
+	private BigDecimal vFCPST;
+	/*
+	 * Valor Total do FCP retido anteriormente por Substituição Tributária
+	*/
+	private BigDecimal vFCPSTRet;
+	/*
+	 * Valor Total do IPI devolvido
+	*/
+	private BigDecimal vIPIDevol;
 	
-	public BigDecimal getVbc() {
-		return vbc;
+	public BigDecimal getvBC() {
+		return vBC;
 	}
-	public void setVbc(BigDecimal vbc) {
-		this.vbc = vbc;
+	public void setvBC(BigDecimal vBC) {
+		this.vBC = vBC;
 	}
-	public BigDecimal getVicms() {
-		return vicms;
+	public BigDecimal getvICMS() {
+		return vICMS;
 	}
-	public void setVicms(BigDecimal vicms) {
-		this.vicms = vicms;
+	public void setvICMS(BigDecimal vICMS) {
+		this.vICMS = vICMS;
 	}
-	public BigDecimal getVbcst() {
-		return vbcst;
+	public BigDecimal getvICMSDeson() {
+		return vICMSDeson;
 	}
-	public void setVbcst(BigDecimal vbcst) {
-		this.vbcst = vbcst;
+	public void setvICMSDeson(BigDecimal vICMSDeson) {
+		this.vICMSDeson = vICMSDeson;
 	}
-	public BigDecimal getVst() {
-		return vst;
+	public BigDecimal getvBCST() {
+		return vBCST;
 	}
-	public void setVst(BigDecimal vst) {
-		this.vst = vst;
+	public void setvBCST(BigDecimal vBCST) {
+		this.vBCST = vBCST;
+	}
+	public BigDecimal getvST() {
+		return vST;
+	}
+	public void setvST(BigDecimal vST) {
+		this.vST = vST;
 	}
 	public BigDecimal getvProd() {
 		return vProd;
@@ -68,29 +151,29 @@ public class Total {
 	public void setvDesc(BigDecimal vDesc) {
 		this.vDesc = vDesc;
 	}
-	public BigDecimal getVii() {
-		return vii;
+	public BigDecimal getvII() {
+		return vII;
 	}
-	public void setVii(BigDecimal vii) {
-		this.vii = vii;
+	public void setvII(BigDecimal vII) {
+		this.vII = vII;
 	}
-	public BigDecimal getVipi() {
-		return vipi;
+	public BigDecimal getvIPI() {
+		return vIPI;
 	}
-	public void setVipi(BigDecimal vipi) {
-		this.vipi = vipi;
+	public void setvIPI(BigDecimal vIPI) {
+		this.vIPI = vIPI;
 	}
-	public BigDecimal getVpis() {
-		return vpis;
+	public BigDecimal getvPIS() {
+		return vPIS;
 	}
-	public void setVpis(BigDecimal vpis) {
-		this.vpis = vpis;
+	public void setvPIS(BigDecimal vPIS) {
+		this.vPIS = vPIS;
 	}
-	public BigDecimal getVcofins() {
-		return vcofins;
+	public BigDecimal getvCOFINS() {
+		return vCOFINS;
 	}
-	public void setVcofins(BigDecimal vcofins) {
-		this.vcofins = vcofins;
+	public void setvCOFINS(BigDecimal vCOFINS) {
+		this.vCOFINS = vCOFINS;
 	}
 	public BigDecimal getvOutro() {
 		return vOutro;
@@ -98,11 +181,11 @@ public class Total {
 	public void setvOutro(BigDecimal vOutro) {
 		this.vOutro = vOutro;
 	}
-	public BigDecimal getVnf() {
-		return vnf;
+	public BigDecimal getvNF() {
+		return vNF;
 	}
-	public void setVnf(BigDecimal vnf) {
-		this.vnf = vnf;
+	public void setvNF(BigDecimal vNF) {
+		this.vNF = vNF;
 	}
 	public BigDecimal getvTotTrib() {
 		return vTotTrib;
@@ -110,4 +193,47 @@ public class Total {
 	public void setvTotTrib(BigDecimal vTotTrib) {
 		this.vTotTrib = vTotTrib;
 	}
+	public BigDecimal getvFCPUFDest() {
+		return vFCPUFDest;
+	}
+	public void setvFCPUFDest(BigDecimal vFCPUFDest) {
+		this.vFCPUFDest = vFCPUFDest;
+	}
+	public BigDecimal getvICMSUFDest() {
+		return vICMSUFDest;
+	}
+	public void setvICMSUFDest(BigDecimal vICMSUFDest) {
+		this.vICMSUFDest = vICMSUFDest;
+	}
+	public BigDecimal getvICMSUFRemet() {
+		return vICMSUFRemet;
+	}
+	public void setvICMSUFRemet(BigDecimal vICMSUFRemet) {
+		this.vICMSUFRemet = vICMSUFRemet;
+	}
+	public BigDecimal getvFCP() {
+		return vFCP;
+	}
+	public void setvFCP(BigDecimal vFCP) {
+		this.vFCP = vFCP;
+	}
+	public BigDecimal getvFCPST() {
+		return vFCPST;
+	}
+	public void setvFCPST(BigDecimal vFCPST) {
+		this.vFCPST = vFCPST;
+	}
+	public BigDecimal getvFCPSTRet() {
+		return vFCPSTRet;
+	}
+	public void setvFCPSTRet(BigDecimal vFCPSTRet) {
+		this.vFCPSTRet = vFCPSTRet;
+	}
+	public BigDecimal getvIPIDevol() {
+		return vIPIDevol;
+	}
+	public void setvIPIDevol(BigDecimal vIPIDevol) {
+		this.vIPIDevol = vIPIDevol;
+	}
+	
 }
