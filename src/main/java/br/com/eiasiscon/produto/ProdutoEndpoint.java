@@ -1,5 +1,7 @@
 package br.com.eiasiscon.produto;
 
+import java.util.UUID;
+
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
@@ -45,6 +47,9 @@ public class ProdutoEndpoint {
 	
 	@PostMapping
 	public ResponseEntity<Produto> criar(@Valid @RequestBody Produto entity, HttpServletResponse response) {
+		if(entity.getCodigo() == null || entity.getCodigo().isEmpty()) {
+			entity.setCodigo(UUID.randomUUID().toString());
+		}
 		Produto entitySaved = service.create(entity);
 		return ResponseEntity.status(HttpStatus.CREATED).body(entitySaved);
 	}

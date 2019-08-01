@@ -25,6 +25,7 @@ public class DetalheFiscal {
     private PISST pisST;
     private COFINS cofins;
     private COFINSST cofinsST;
+    private BigDecimal vTotTrib;
     
 	public String getCfop() {
 		return cfop;
@@ -109,6 +110,12 @@ public class DetalheFiscal {
 	}
 	public void setCofinsST(COFINSST cofinsST) {
 		this.cofinsST = cofinsST;
+	}
+	public BigDecimal getvTotTrib() {
+		return vTotTrib;
+	}
+	public void setvTotTrib(BigDecimal vTotTrib) {
+		this.vTotTrib = vTotTrib;
 	}
 
 }

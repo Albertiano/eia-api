@@ -22,7 +22,7 @@ targetCompatibility = 1.8
 
 repositories {
 	mavenCentral()
-	maven { url "http://www.autocomsistemas.com.br:8081/nexus/content/repositories/autocom/"}
+	maven { url "https://oss.sonatype.org/content/repositories/snapshots"}
 	maven { url "http://repo.spring.io/release" }
     maven { url "http://jaspersoft.artifactoryonline.com/jaspersoft/third-party-ce-artifacts/" }
     maven { url "http://jasperreports.sourceforge.net/maven2/" }
@@ -37,7 +37,7 @@ dependencies {
 	compile('org.apache.commons:commons-lang3:3.7')
 	compile('io.jsonwebtoken:jjwt:0.9.0')	
 	compile('org.apache.commons:commons-csv:1.5')	
-	compile('br.com.swconsultoria:java-nfe:4.00.10')
+	compile('br.com.swconsultoria:java-nfe:4.00.12-SNAPSHOT')
 	compile('net.sf.jasperreports:jasperreports:6.7.0')
 	compile('net.sourceforge.barbecue:barbecue:1.5-beta1')
 	compile('com.google.zxing:javase:3.3.3')

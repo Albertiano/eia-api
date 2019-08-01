@@ -325,6 +325,8 @@ public class NFeConversor {
         if (cofinsSt != null) {
             imposto.getContent().add(new ObjectFactory().createTNFeInfNFeDetImpostoCOFINSST(cofinsSt));
         }
+        
+        imposto.getContent().add(new ObjectFactory().createTNFeInfNFeDetImpostoVTotTrib(ConversorBigDecimal.paraStringNFeValor(i.getDetFiscal().getvTotTrib()))); 
 
         det.setImposto(imposto);
 
