@@ -334,9 +334,7 @@ public class NotaFiscalService extends BaseService<NotaFiscal, String> {
 		
 		/**************   ICMS Inicio **************************/
 		ICMS icms = t.getIcms();
-		icms.setvICMS(BigDecimal.ZERO);
-		icms.setvICMSST(BigDecimal.ZERO);
-		icms.setvBCST(BigDecimal.ZERO);
+		
 		if (icms.getModBCICMS() == ModBC.OPERACAO) {
 			icms.setvBCICMS(i.getSubtotal());
 			icms.setvICMS(calculoPorcentagem(icms.getvBCICMS(), icms.getpICMS()));
@@ -350,6 +348,10 @@ public class NotaFiscalService extends BaseService<NotaFiscal, String> {
 			BigDecimal vAgreg = calculoPorcentagem(subtotal, icms.getpMVAST());
 
 			icms.setvBCST(subtotal.add(vAgreg));
+			icms.setvICMSST(calculoPorcentagem(icms.getvBCST(),
+			icms.getpICMSST()).subtract(icms.getvICMS()));
+		} else {
+			icms.setvBCST(i.getQuantidade().multiply(icms.getvBCST()));
 			icms.setvICMSST(calculoPorcentagem(icms.getvBCST(),
 			icms.getpICMSST()).subtract(icms.getvICMS()));
 		}
